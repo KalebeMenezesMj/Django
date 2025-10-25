@@ -3,11 +3,21 @@
 {% block titulo %}Contato{% endblock %}
 
 {% block conteudo %}
-    <h1>Criar Mensagem</h1>
-     <form action="{% url 'contato'%}" method="post">
-        {% csrf_token %}
-        {{form}}
 
-        <input type="submit" value="Salvar">
-    </form>
+<main class="page-container">
+    
+    <div class="card">
+        <h1>Criar Mensagem</h1>
+
+        <form action="{% url 'contato' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+
+        <a href="{% url 'readContato' %}" class="link-msg">Ver mensagens</a>
+    </div>
+</main>
+
 {% endblock %}

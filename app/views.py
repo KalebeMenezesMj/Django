@@ -1,8 +1,7 @@
 from django.shortcuts import redirect,render
-from app.models import Desenvolvedor
-from app.models import Contato
-from app.forms import FormDesenvolvedor
-from app.forms import FormContato
+from app.models import Desenvolvedor, Contato
+
+from app.forms import FormDesenvolvedor, FormContato, FormUsuario
 
 
 def dev(request):
@@ -19,6 +18,7 @@ def sobre(request):
     return render(request, 'sobre.html')
 
 
+#DESENVOLVEDORES
 def excluirDev(request, id_dev):
     dev = Desenvolvedor.objects.get(id=id_dev)
     dev.delete()
@@ -44,6 +44,8 @@ def editarDev(request, id_dev):
             return redirect('dev')
     return render(request, 'editardev.html',{'form':formulario})
 
+
+#MENSAGENS DE CONTATO
 def readContato(request):
      contato = Contato.objects.all().values()
      return render(request, 'listcontato.html', {'contato':contato})
@@ -61,3 +63,17 @@ def excluirContato(request, id_dev):
     msg = Contato.objects.get(id=id_dev)
     msg.delete()
     return redirect('readContato')
+
+
+#USUARIOS
+def salvarUsuario(request):
+    if request.POST:
+        formulario = FormUsuario(request.POST)
+
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('index')
+    else:
+            formulario = FormUsuario()
+    return render(request, 'salvar-usuario.html', {'form': formulario})
+        

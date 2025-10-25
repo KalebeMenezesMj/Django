@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+
+{% block titulo %}Cadastro{% endblock %}
+
+{% block conteudo %}
+
+    <main class="page-container">
+
+        <div class="card">
+    
+            <h1>Cadastrar novo Usuario</h1>
+            
+            <form action="{% url 'salvarUsuario'%}" method="post">
+                {% csrf_token %}
+                
+                {{form}}
+                 
+                <button type="submit" class="btn btn-primary">Salvar</button>
+        
+            </form>
+
+        </div> </main> {% endblock %}
