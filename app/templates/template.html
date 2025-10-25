@@ -1,0 +1,28 @@
+<!-- DTL = Django Template Language - Lembre de alterar o tipo do arquivo de html para djangohtml -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <title>{% block titulo %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <div>
+            <img src="{% static 'images/jython.png' %}" width="42px">
+        </div>
+    <nav>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'sobre' %}">Sobre</a>
+        <a href="#">Galeria</a>
+        <a href="{%url 'contato'%}">Contato</a>
+    </nav>
+    </header>
+    <main>
+        {% block conteudo %}
+        {% endblock %}
+    </main>
+</body>
+</html>

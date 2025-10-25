@@ -1,0 +1,13 @@
+{% extends "template.html" %}
+
+{% block titulo %}Contato{% endblock %}
+
+{% block conteudo %}
+    <h1>Criar Mensagem</h1>
+     <form action="{% url 'contato'%}" method="post">
+        {% csrf_token %}
+        {{form}}
+
+        <input type="submit" value="Salvar">
+    </form>
+{% endblock %}
