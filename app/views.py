@@ -2,6 +2,9 @@ from django.shortcuts import redirect,render
 from app.models import Desenvolvedor, Contato
 
 from app.forms import FormDesenvolvedor, FormContato, FormUsuario
+from django.contrib.auth import authenticate, login
+
+from django.contrib import messages
 
 
 def dev(request):
@@ -72,8 +75,21 @@ def salvarUsuario(request):
 
         if formulario.is_valid():
             formulario.save()
-            return redirect('index')
+            return redirect('login')
     else:
             formulario = FormUsuario()
     return render(request, 'salvar-usuario.html', {'form': formulario})
         
+
+def login(request):
+    if request.POST:
+        nome = request.POST.get('username')
+        senha = request.POST.get('password')
+        usuario = authenticate(request, username = nome, password=senha)
+
+        if usuario is not None:
+            login(request, usuario)
+            return redirect('index')
+        else:
+            messages.error(request, "Usuario ou senha invalidos")
+    return render(request, 'login.html')

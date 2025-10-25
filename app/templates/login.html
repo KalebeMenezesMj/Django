@@ -1,0 +1,26 @@
+{% extends "template.html" %}
+
+{% block titulo %}loginUsuario{% endblock %}
+
+{% block conteudo %}
+
+    <main class="page-container">
+
+        <div class="card">
+    
+            <h1>Login</h1>
+            
+            <form action="{% url 'login'%}" method="post">
+                {% csrf_token %}
+                
+                <label for="">Usuario</label>
+                <input type="text" name="username" required><br>
+
+                <label for="">Senha</label>
+                <input type="text" name="password" required><br>
+                 
+                <button type="password" class="btn btn-primary">Entrar</button>
+        
+            </form>
+
+        </div> </main> {% endblock %}

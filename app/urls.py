@@ -20,5 +20,7 @@ urlpatterns = [
 
 
     #crud usuario
-    path('salvar-usuario', views.salvarUsuario, name='salvarUsuario')
+    path('salvar-usuario', views.salvarUsuario, name='salvarUsuario'),
+    path('login', views.login, name='login')
+
 ]
