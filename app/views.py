@@ -89,7 +89,11 @@ def loginUsuario(request):
 
         if usuario is not None:
             login(request, usuario)
-            return redirect('index')
+            return redirect('dashboard')
         else:
             messages.error(request, "Usuario ou senha invalidos")
     return render(request, 'login.html')
+
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
