@@ -81,7 +81,7 @@ def salvarUsuario(request):
     return render(request, 'salvar-usuario.html', {'form': formulario})
         
 
-def login(request):
+def loginUsuario(request):
     if request.POST:
         nome = request.POST.get('username')
         senha = request.POST.get('password')
