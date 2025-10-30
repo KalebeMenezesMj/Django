@@ -3,20 +3,36 @@
 {% block titulo %}Desenvolvedores{% endblock %}
 
 {% block conteudo %}
-    <h1>Equipe</h1>
-    <section>
+<main class="page-container">
 
-        <a href="{%url 'salvarDev'%}"> Cadastrar devs</a><br><br>
+    <div class="card">
 
-        {%for devs in desenvolvedores%}
-        <p>Id: {{devs.id}}</p>
-        <p>Nome: {{devs.nome}}</p>
-        <p>Funcao: {{devs.funcao}}</p>
-        <p>Descricao: {{devs.descricao}}</p>
-        <p>Email: {{devs.email}}</p>
-        <a href="{% url "excluirDev" devs.id %}">Excluir</a>
-        <a href="{% url "editarDev" devs.id %}">Editar</a>
-        <br><br>
-        {% endfor %}
-    </section>
+        <h1>Equipe de Desenvolvedores</h1>
+
+        <a href="{% url 'salvarDev' %}" class="btn btn-primary" style="margin-bottom: 20px;">Cadastrar Novo Dev</a>
+
+        {% if desenvolvedores %}
+        <div class="mensagens-grid">
+            {% for devs in desenvolvedores %}
+            <div class="msg-card">
+                <p><strong>ID:</strong> {{ devs.id }}</p>
+                <p><strong>Nome:</strong> {{ devs.nome }}</p>
+                <p><strong>Função:</strong> {{ devs.funcao }}</p>
+                <p><strong>Descrição:</strong> {{ devs.descricao }}</p>
+                <p><strong>Email:</strong> {{ devs.email }}</p>
+
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <a href="{% url 'editarDev' devs.id %}" class="btn btn-primary" style="flex: 1;">Editar</a>
+                    <a href="{% url 'excluirDev' devs.id %}" class="btn btn-danger" style="flex: 1;">Excluir</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="sem-msg">Nenhum desenvolvedor cadastrado ainda.</p>
+        {% endif %}
+
+    </div>
+
+</main>
 {% endblock %}
