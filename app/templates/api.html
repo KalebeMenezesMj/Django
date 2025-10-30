@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block titulo %}Api{% endblock %}
+
+{% block conteudo %}
+    <h1>Api</h1>
+    {% for prod in dadosapi %}
+    
+    <img src="{{prod.image}}" width="50px">
+    <p>{{prod.id}} - {{prod.title}}</p>
+    <p>Preco: R$ {{prod.price}}</p>
+    <p>Descrição: {{prod.description}}</p>
+    <p>Categoria: {{prod.category}}</p>
+    <hr>
+    
+    {% endfor %}
+{% endblock %}

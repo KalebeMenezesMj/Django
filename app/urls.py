@@ -30,4 +30,6 @@ urlpatterns = [
     path('api-desenvolvedores', views.getApiDev, name='getApiDev'),
     path('api-desenvolvedores/<int:id_dev>', views.getIdApiDev, name='getIdApiDev'),
 
+
+    path('api', views.getApi, name='getApi'),
 ]

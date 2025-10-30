@@ -13,6 +13,7 @@ from app.serializers import DesenvolvedorSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
+import requests
 
 def dev(request):
     devs = Desenvolvedor.objects.all().values()
@@ -113,7 +114,7 @@ def logoutUsuario(request):
     logout(request)
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def getApiDev(request):
     if request.method == 'GET':
         desenvolvedores = Desenvolvedor.objects.all()
@@ -150,3 +151,7 @@ def getIdApiDev(request,id_dev):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
+
+def getApi(request):
+    dados = requests.get('https://fakestoreapi.com/products').json()
+    return render(request, 'api.html', {'dadosapi':dados})
