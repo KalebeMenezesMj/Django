@@ -4,4 +4,7 @@
 
 {% block conteudo %}
     <h1>Dashboard</h1>
+    <p>Seja bem-vindo(a), {{usuario.username}}  ({{usuario.email}})</p>
+    <a href="{%url 'logoutUsuario' %}">Logout</a>
+    
 {% endblock %}

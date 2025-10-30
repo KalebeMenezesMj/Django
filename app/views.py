@@ -2,9 +2,11 @@ from django.shortcuts import redirect,render
 from app.models import Desenvolvedor, Contato
 
 from app.forms import FormDesenvolvedor, FormContato, FormUsuario
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
+
+from django.contrib.auth.decorators import login_required
 
 
 def dev(request):
@@ -95,5 +97,12 @@ def loginUsuario(request):
     return render(request, 'login.html')
 
 
+
+@login_required(login_url='loginUsuario')
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    if not request.user:
+        return redirect('loginUsuario')
+    return render(request, 'dashboard.html', {'usuario':request.user})
+
+def logoutUsuario(request):
+    logout(request)

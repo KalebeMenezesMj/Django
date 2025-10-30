@@ -23,6 +23,7 @@ urlpatterns = [
     path('salvar-usuario', views.salvarUsuario, name='salvarUsuario'),
     path('login', views.loginUsuario, name='login'),
 
-    path('dashboard', views.dashboard, name = 'dashboard')
+    path('dashboard', views.dashboard, name = 'dashboard'),
+    path('logout', views.logoutUsuario, name='logoutUsuario')
 
 ]
