@@ -24,6 +24,10 @@ urlpatterns = [
     path('login', views.loginUsuario, name='login'),
 
     path('dashboard', views.dashboard, name = 'dashboard'),
-    path('logout', views.logoutUsuario, name='logoutUsuario')
+    path('logout', views.logoutUsuario, name='logoutUsuario'),
+
+    path('api-desenvolvedores', views.getApiDev, name='getApiDev'),
+
+    path('api-desenvolvedores/<int:id_dev>', views.getIdApiDev, name='getIdApiDev'),
 
 ]

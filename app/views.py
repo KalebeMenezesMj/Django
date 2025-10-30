@@ -8,6 +8,11 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 
+from rest_framework.decorators import api_view
+from app.serializers import DesenvolvedorSerializer
+from rest_framework.response import Response
+from rest_framework import status
+
 
 def dev(request):
     devs = Desenvolvedor.objects.all().values()
@@ -106,3 +111,34 @@ def dashboard(request):
 
 def logoutUsuario(request):
     logout(request)
+
+
+@api_view(['GET'])
+def getApiDev(request):
+    if request.method == 'GET':
+        desenvolvedores = Desenvolvedor.objects.all()
+        serializer = DesenvolvedorSerializer(desenvolvedores, many = True)
+        return Response(serializer.data)
+    
+@api_view(['GET','DELETE', 'PUT'])
+def getIdApiDev(request,id_dev):
+    try:
+        desenvolvedor = Desenvolvedor.objects.get(id=id_dev)
+    except Desenvolvedor.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = DesenvolvedorSerializer(desenvolvedor)
+        return Response(serializer.data)
+    
+    elif request.method== 'DELETE':
+        desenvolvedor.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == 'PUT':
+        serializer = DesenvolvedorSerializer(desenvolvedor, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
