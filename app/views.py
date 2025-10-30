@@ -120,6 +120,14 @@ def getApiDev(request):
         serializer = DesenvolvedorSerializer(desenvolvedores, many = True)
         return Response(serializer.data)
     
+    elif request.method == 'POST':
+        serializer = DesenvolvedorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
 @api_view(['GET','DELETE', 'PUT'])
 def getIdApiDev(request,id_dev):
     try:
