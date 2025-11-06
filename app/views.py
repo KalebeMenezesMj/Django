@@ -1,7 +1,7 @@
 from django.shortcuts import redirect,render
-from app.models import Desenvolvedor, Contato
+from app.models import Desenvolvedor, Contato, Produto
 
-from app.forms import FormDesenvolvedor, FormContato, FormUsuario
+from app.forms import FormDesenvolvedor, FormContato, FormUsuario, FormProduto,FormCategoria
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
@@ -155,3 +155,17 @@ def getIdApiDev(request,id_dev):
 def getApi(request):
     dados = requests.get('https://fakestoreapi.com/products').json()
     return render(request, 'api.html', {'dadosapi':dados})
+
+def salvarProduto(request):
+    if request.POST:
+        formulario = FormProduto(request.POST, request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('index')
+    else:
+        formulario = FormProduto()
+        return render(request, 'salvar-produto.html',{'form':formulario})
+    
+def produtos(request):
+    produtos = Produto.objects.all().values()
+    return render(request, 'produtos.html', {'prods':produtos})

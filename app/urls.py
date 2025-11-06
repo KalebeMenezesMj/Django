@@ -32,4 +32,7 @@ urlpatterns = [
 
 
     path('api', views.getApi, name='getApi'),
+
+    path('salvar-produto', views.salvarProduto, name='salvarProduto'),
+    path('produtos', views.produtos, name='produto')
 ]

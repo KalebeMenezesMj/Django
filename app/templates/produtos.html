@@ -1,0 +1,39 @@
+{% extends "template.html" %}
+
+{% block titulo %}Produtos{% endblock %}
+
+{% block conteudo %}
+<main class="page-container">
+
+    <div class="card">
+
+        <h1>Produtos</h1>
+
+        <a href="{% url 'salvarProduto' %}" class="btn btn-primary" style="margin-bottom: 20px;">Cadastrar Novo Produto</a>
+
+        {% if prods %}
+        <div class="mensagens-grid">
+            {%for p in prods%}
+            <div class="msg-card">
+
+                <img src="media/{{p.imagem}}" width = 50%>
+                <p>Produto: {{p.nome}}</p>
+                <p>Descricao: {{p.descricao}}</p>
+                <p>Categoria: {{p.categoria}}</p>
+                <p>R$: {{p.preco}}</p>
+
+                {% comment %} <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <a href="{% url 'editarDev' devs.id %}" class="btn btn-primary" style="flex: 1;">Editar</a>
+                    <a href="{% url 'excluirDev' devs.id %}" class="btn btn-danger" style="flex: 1;">Excluir</a>
+                </div> {% endcomment %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="sem-msg">Nenhum desenvolvedor cadastrado ainda.</p>
+        {% endif %}
+
+    </div>
+
+</main>
+{% endblock %}

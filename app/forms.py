@@ -1,6 +1,6 @@
 from django import forms
 from app.models import Desenvolvedor
-from app.models import Contato
+from app.models import Contato, Produto, Categoria
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -23,4 +23,18 @@ class FormUsuario(UserCreationForm):
         labels = {
             'username':'Usuario',
             'email':'E-mail',
+        }
+
+class FormCategoria(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nome']
+
+class FormProduto(forms.ModelForm):
+    class Meta:
+        model = Produto
+        fields= ['nome', 'descricao', 'preco', 'imagem','categoria']
+        widgets = {
+            'nome': forms.TextInput(attrs={'placeholder':'seu nome aqui'}),
+            'imagem': forms.FileInput(attrs={'accept':'image/*'})
         }

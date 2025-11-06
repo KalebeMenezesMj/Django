@@ -1,0 +1,45 @@
+{% extends "template.html" %}
+
+{% block titulo %}Cadastro{% endblock %}
+
+{% block conteudo %}
+
+<main class="page-container">
+
+    <div class="card">
+
+        <h1>Cadastrar novo PRODUTO</h1>
+
+        <form action="{% url 'salvarProduto' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-msg">
+                            {% for error in field.errors %}
+                                <small>{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+
+    </div>
+
+</main>
+
+{% endblock %}
