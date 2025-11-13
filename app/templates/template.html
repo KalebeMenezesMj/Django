@@ -9,6 +9,11 @@
     <title>{% block titulo %}{% endblock %}</title>
 </head>
 <body>
+    {% comment %} {%if messages%}
+        {%for msg in messages%}
+            <p>{{msg}}</p>
+        {%endfor%}
+    {%endif%} {% endcomment %}
     <header>
         <div>
             <img src="{% static 'images/jython.png' %}" width="42px">

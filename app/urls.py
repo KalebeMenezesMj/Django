@@ -38,5 +38,5 @@ urlpatterns = [
 
     path('comprar/<int:id_prod>', views.comprar, name='comprar'),
 
-    # path('grafrico', views.grafico, name='grafico')
+    path('grafico', views.grafico, name='grafico')
 ]

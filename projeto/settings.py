@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app', #Tem que adicionar os apps que voce criou
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    # 'matplotlib'
 ]
 
 MIDDLEWARE = [

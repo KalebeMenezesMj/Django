@@ -1,5 +1,5 @@
 from django.shortcuts import redirect,render
-from app.models import Desenvolvedor, Contato, Produto
+from app.models import Desenvolvedor, Contato, Produto, Compra
 
 from app.forms import FormDesenvolvedor, FormContato, FormUsuario, FormProduto, FormCategoria, FormCompra
 from django.contrib.auth import authenticate, login, logout
@@ -12,8 +12,11 @@ from rest_framework.decorators import api_view
 from app.serializers import DesenvolvedorSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
+
 
 import requests
+
 
 def dev(request):
     devs = Desenvolvedor.objects.all().values()
@@ -170,20 +173,63 @@ def produtos(request):
     produtos = Produto.objects.all()
     return render(request, 'produtos.html', {'prods':produtos})
 
-def comprar(request, id_prod):
-    produto = Produto.objects.get(id = id_prod)
 
-    if request.POST:
+def comprar(request, id_prod):
+    produto = get_object_or_404(Produto, id=id_prod)
+
+    if request.method == 'POST':
         formulario = FormCompra(request.POST)
-        
         if formulario.is_valid():
             compra = formulario.save(commit=False)
             compra.produto = produto
 
             if produto.estoque < compra.quantidade:
-                messages.error(request, 'Quantidade solicitada exede o estoque')
-                return redirect('produtos')
-            
+                messages.error(request, 'Quantidade solicitada excede o estoque')
+                return redirect('produto')
+
             produto.estoque -= compra.quantidade
             produto.save()
             compra.save()
+
+            messages.success(request, 'Compra realizada com sucesso!')
+            return redirect('produto')
+    else:
+        formulario = FormCompra()
+
+    return render(request, "comprar.html", {"form": formulario, "produto": produto})
+
+
+
+import os
+from django.conf import settings
+from django.db.models import Sum
+import matplotlib.pyplot as plt
+
+def grafico(request):
+    vendas_totais = Compra.objects.values('produto__nome')\
+    .annotate(quantidade_vendida = Sum('quantidade'))\
+    .order_by('produto__nome')
+
+    produtos = [venda['produto__nome'] for venda in vendas_totais]
+    quantidade_vendida= [venda['quantidade_vendida'] for venda in vendas_totais]
+
+    plt.figure(figsize=(10,6))
+    plt.bar(produtos, quantidade_vendida, color='b')
+
+    plt.title("Quantidade de vendas por Produto", fontsize=14)
+    plt.xlabel('Produto', fontsize = 12)
+    plt.ylabel('Quantidade', fontsize=12)
+    plt.xticks(rotation = 45, ha='right')
+    plt.grid(True)
+
+    plt.tight_layout()
+
+    nome_arquivo_imagem = 'quantidade_vendas_por_produto.png'
+    caminho_grafico = os.path.join(settings.MEDIA_ROOT, nome_arquivo_imagem)
+
+    plt.savefig(caminho_grafico)
+    plt.close()
+
+    url_grafico = os.path.join(settings.MEDIA_URL, nome_arquivo_imagem)
+
+    return render(request, 'grafico.html', {'grafico':url_grafico})

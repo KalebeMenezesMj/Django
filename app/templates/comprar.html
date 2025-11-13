@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block titulo %}Comprar{% endblock %}
+
+{% block conteudo %}
+    <h1>Comprar: {{produto.nome}}</h1>
+
+    <img src="/media/{{produto.imagem}}" alt{{produto.nome}}>
+    <p>{{produto.descricao}}</p>
+    <p><strong>Preco:</strong> R${{produto.preco}}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Confirmar Compra</button>
+    </form>
+{% endblock %}

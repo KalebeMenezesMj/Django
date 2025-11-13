@@ -27,6 +27,9 @@ class Produto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
     estoque = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        return self.nome
+
 class Compra(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
