@@ -34,5 +34,9 @@ urlpatterns = [
     path('api', views.getApi, name='getApi'),
 
     path('salvar-produto', views.salvarProduto, name='salvarProduto'),
-    path('produtos', views.produtos, name='produto')
+    path('produtos', views.produtos, name='produto'),
+
+    path('comprar/<int:id_prod>', views.comprar, name='comprar'),
+
+    # path('grafrico', views.grafico, name='grafico')
 ]

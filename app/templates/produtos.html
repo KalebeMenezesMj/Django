@@ -21,6 +21,8 @@
                 <p>Descricao: {{p.descricao}}</p>
                 <p>Categoria: {{p.categoria}}</p>
                 <p>R$: {{p.preco}}</p>
+                <p>Estoque {{p.estique}}</p>
+                <a href="{%url 'comprar' prods.id %}">Comprar</a>
 
                 {% comment %} <div style="display: flex; gap: 10px; margin-top: 15px;">
                     <a href="{% url 'editarDev' devs.id %}" class="btn btn-primary" style="flex: 1;">Editar</a>

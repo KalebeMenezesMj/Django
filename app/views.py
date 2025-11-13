@@ -1,7 +1,7 @@
 from django.shortcuts import redirect,render
 from app.models import Desenvolvedor, Contato, Produto
 
-from app.forms import FormDesenvolvedor, FormContato, FormUsuario, FormProduto,FormCategoria
+from app.forms import FormDesenvolvedor, FormContato, FormUsuario, FormProduto, FormCategoria, FormCompra
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
@@ -167,5 +167,23 @@ def salvarProduto(request):
         return render(request, 'salvar-produto.html',{'form':formulario})
     
 def produtos(request):
-    produtos = Produto.objects.all().values()
+    produtos = Produto.objects.all()
     return render(request, 'produtos.html', {'prods':produtos})
+
+def comprar(request, id_prod):
+    produto = Produto.objects.get(id = id_prod)
+
+    if request.POST:
+        formulario = FormCompra(request.POST)
+        
+        if formulario.is_valid():
+            compra = formulario.save(commit=False)
+            compra.produto = produto
+
+            if produto.estoque < compra.quantidade:
+                messages.error(request, 'Quantidade solicitada exede o estoque')
+                return redirect('produtos')
+            
+            produto.estoque -= compra.quantidade
+            produto.save()
+            compra.save()

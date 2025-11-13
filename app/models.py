@@ -25,3 +25,12 @@ class Produto(models.Model):
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     imagem = models.ImageField(upload_to='produtos/', null= True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
+    estoque = models.PositiveIntegerField(default=0)
+
+class Compra(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField(default=1)
+    data = models.DateTimeField(auto_now_add=True)
+
+    def total (self):
+        return self.quantidade*self.produto.preco
